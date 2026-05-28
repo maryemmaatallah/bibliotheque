@@ -6,7 +6,6 @@
         <h2>{{ $livre->titre }}</h2>
         <p><strong>✍️ Auteur :</strong> {{ $livre->auteur->nom }}</p>
         <p><strong>📂 Catégorie :</strong> {{ $livre->categorie->nom ?? 'Non définie' }}</p>
-        <p><strong>🎭 Genre :</strong> {{ $livre->genre }}</p>
         <p><strong>📝 Description :</strong> {{ $livre->description }}</p>
         <p><strong>📦 Stock :</strong>
             @if($livre->stock > 0)
@@ -15,17 +14,25 @@
             <span class="badge bg-danger">Indisponible</span>
             @endif
         </p>
-        <!-- Note moyenne -->
         @if($livre->avis->count() > 0)
         <p><strong>⭐ Note moyenne :</strong>
             {{ number_format($livre->avis->avg('note'), 1) }}/5
             ({{ $livre->avis->count() }} avis)
         </p>
         @endif
+
+        <!-- Bouton Favori uniquement pour les membres -->
+        @if(Auth::user()->role !== 'admin')
+        <form action="{{ route('favoris.store', $livre) }}" method="POST" style="display:inline">
+            @csrf
+            <button type="submit" class="btn btn-outline-danger mt-2">❤️ Ajouter aux favoris</button>
+        </form>
+        @endif
     </div>
 </div>
 
-<!-- Formulaire avis -->
+<!-- Formulaire avis uniquement pour les membres -->
+@if(Auth::user()->role !== 'admin')
 <div class="card mb-4">
     <div class="card-body">
         <h4>⭐ Donner un avis</h4>
@@ -49,11 +56,8 @@
         </form>
     </div>
 </div>
-<!-- Bouton Favori -->
-<form action="{{ route('favoris.store', $livre) }}" method="POST" style="display:inline">
-    @csrf
-    <button type="submit" class="btn btn-outline-danger mt-2">❤️ Ajouter aux favoris</button>
-</form>
+@endif
+
 <!-- Liste des avis -->
 <h4>💬 Avis des lecteurs</h4>
 @forelse($livre->avis as $avis)

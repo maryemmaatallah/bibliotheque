@@ -11,10 +11,10 @@ class Livre extends Model
 
     protected $fillable = [
         'titre',
-        'genre',
         'description',
         'stock',
         'auteur_id',
+        'categorie_id',
     ];
 
     public function auteur()

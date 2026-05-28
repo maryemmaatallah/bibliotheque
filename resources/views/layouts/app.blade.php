@@ -13,24 +13,43 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('livres.index') }}">Livres</a>
+                    <a class="nav-link" href="{{ route('livres.index') }}">📚 Livres</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('auteurs.index') }}">Auteurs</a>
+                    <a class="nav-link" href="{{ route('auteurs.index') }}">✍️ Auteurs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('emprunts.index') }}">Emprunts</a>
+                    <a class="nav-link" href="{{ route('emprunts.index') }}">📖 Emprunts</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('categories.index') }}">📂 Catégories</a>
                 </li>
+                @if(Auth::user()->role !== 'admin')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('favoris.index') }}">❤️ Favoris</a>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('chatbot.index') }}">🤖 Chatbot</a>
                 </li>
+
+                @if(Auth::user()->role === 'admin')
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-warning" href="#" data-bs-toggle="dropdown">
+                        ⚙️ Admin
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ route('admin.livres.create') }}">➕ Ajouter Livre</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.auteurs.create') }}">➕ Ajouter Auteur</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.categories.create') }}">➕ Ajouter Catégorie</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.favoris') }}">❤️ Gestion Favoris</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.avis') }}">⭐ Gestion Avis</a></li>
+                    </ul>
+                </li>
+                @endif
             </ul>
+
             <ul class="navbar-nav ms-auto">
                 @auth
                 <li class="nav-item">
@@ -42,7 +61,6 @@
                         <button class="btn btn-outline-light btn-sm mt-2">Déconnexion</button>
                     </form>
                 </li>
-
                 @endauth
             </ul>
         </div>
@@ -56,7 +74,6 @@
     @yield('content')
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Footer -->
 <footer class="bg-dark text-white text-center py-3 mt-5">
     <p class="mb-0">© 2026 Bibliothèque Numérique — Tous droits réservés</p>

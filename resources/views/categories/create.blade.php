@@ -3,7 +3,7 @@
 @section('content')
 <h2>➕ Ajouter une Catégorie</h2>
 
-<form action="{{ route('categories.store') }}" method="POST">
+<form action="{{ route('admin.categories.store') }}" method="POST">
     @csrf
     <div class="mb-3">
         <label class="form-label">Nom</label>

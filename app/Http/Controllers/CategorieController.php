@@ -9,7 +9,9 @@ class CategorieController extends Controller
 {
     public function index()
     {
-        $categories = Categorie::withCount('livres')->get();
+        $categories = Categorie::withCount('livres')
+            ->with('livres')
+            ->get();
         return view('categories.index', compact('categories'));
     }
 

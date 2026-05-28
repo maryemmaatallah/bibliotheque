@@ -3,8 +3,7 @@
 @section('content')
 <h2>Modifier un Emprunt</h2>
 
-<form action="{{ route('emprunts.update', $emprunt) }}" method="POST">
-    @csrf
+<form action="{{ route('emprunts.update', $emprunt) }}" method="POST">    @csrf
     @method('PUT')
     <div class="mb-3">
         <label class="form-label">Livre</label>

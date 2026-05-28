@@ -2,8 +2,10 @@
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Liste des Livres</h2>
-    <a href="{{ route('livres.create') }}" class="btn btn-primary">+ Ajouter</a>
+    <h2>📚 Liste des Livres</h2>
+    @if(Auth::user()->role === 'admin')
+    <a href="{{ route('admin.livres.create') }}" class="btn btn-primary">+ Ajouter</a>
+    @endif
 </div>
 
 <!-- Barre de recherche -->
@@ -23,7 +25,7 @@
     <thead class="table-dark">
     <tr>
         <th>Titre</th>
-        <th>Genre</th>
+        <th>Catégorie</th>
         <th>Auteur</th>
         <th>Stock</th>
         <th>Actions</th>
@@ -33,7 +35,7 @@
     @forelse($livres as $livre)
     <tr>
         <td>{{ $livre->titre }}</td>
-        <td>{{ $livre->genre }}</td>
+        <td>{{ $livre->categorie->nom ?? 'Non définie' }}</td>
         <td>{{ $livre->auteur->nom }}</td>
         <td>
             @if($livre->stock > 0)
@@ -44,12 +46,14 @@
         </td>
         <td>
             <a href="{{ route('livres.show', $livre) }}" class="btn btn-info btn-sm">👁 Voir</a>
-            <a href="{{ route('livres.edit', $livre) }}" class="btn btn-warning btn-sm">✏️ Modifier</a>
-            <form action="{{ route('livres.destroy', $livre) }}" method="POST" style="display:inline">
+            @if(Auth::user()->role === 'admin')
+            <a href="{{ route('admin.livres.edit', $livre) }}" class="btn btn-warning btn-sm">✏️ Modifier</a>
+            <form action="{{ route('admin.livres.destroy', $livre) }}" method="POST" style="display:inline">
                 @csrf
                 @method('DELETE')
-                <button class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ?')">🗑 Supprimer</button>
+                <button class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ?')">🗑</button>
             </form>
+            @endif
         </td>
     </tr>
     @empty

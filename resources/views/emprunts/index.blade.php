@@ -14,7 +14,9 @@
         <th>Date Emprunt</th>
         <th>Date Retour</th>
         <th>Statut</th>
+        @if(Auth::user()->role === 'admin')
         <th>Actions</th>
+        @endif
     </tr>
     </thead>
     <tbody>
@@ -31,14 +33,16 @@
             <span class="badge bg-success">Retourné</span>
             @endif
         </td>
+        @if(Auth::user()->role === 'admin')
         <td>
-            <a href="{{ route('emprunts.edit', $emprunt) }}" class="btn btn-warning btn-sm">Modifier</a>
+            <a href="{{ route('emprunts.edit', $emprunt) }}" class="btn btn-warning btn-sm">✏️ Modifier</a>
             <form action="{{ route('emprunts.destroy', $emprunt) }}" method="POST" style="display:inline">
                 @csrf
                 @method('DELETE')
-                <button class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ?')">Supprimer</button>
+                <button class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ?')">🗑</button>
             </form>
         </td>
+        @endif
     </tr>
     @endforeach
     </tbody>

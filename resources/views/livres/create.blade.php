@@ -3,15 +3,11 @@
 @section('content')
 <h2>➕ Ajouter un Livre</h2>
 
-<form action="{{ route('livres.store') }}" method="POST">
+<form action="{{ route('admin.livres.store') }}" method="POST">
     @csrf
     <div class="mb-3">
         <label class="form-label">Titre</label>
         <input type="text" name="titre" class="form-control" required>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Genre</label>
-        <input type="text" name="genre" class="form-control" required>
     </div>
     <div class="mb-3">
         <label class="form-label">Description</label>

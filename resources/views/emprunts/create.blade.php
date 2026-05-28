@@ -3,8 +3,7 @@
 @section('content')
 <h2>Nouvel Emprunt</h2>
 
-<form action="{{ route('emprunts.store') }}" method="POST">
-    @csrf
+<form action="{{ route('emprunts.store') }}" method="POST">    @csrf
     <div class="mb-3">
         <label class="form-label">Livre</label>
         <select name="livre_id" class="form-control" required>

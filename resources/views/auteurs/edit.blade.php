@@ -3,7 +3,7 @@
 @section('content')
 <h2>Modifier un Auteur</h2>
 
-<form action="{{ route('auteurs.update', $auteur) }}" method="POST">
+<form action="{{ route('admin.auteurs.update', $auteur) }}" method="POST">
     @csrf
     @method('PUT')
     <div class="mb-3">
