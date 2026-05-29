@@ -45,8 +45,18 @@ jobs:
         run: |
           mkdir -p reports
           php artisan migrate --force
-          XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-clover=reports/coverage.xml
-        continue-on-error: true
+          XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover reports/coverage.xml || true
+          ls -la reports/
+
+      - name: Check coverage file
+        run: |
+          if [ -f reports/coverage.xml ]; then
+            echo "Coverage file exists!"
+            cat reports/coverage.xml | head -5
+          else
+            echo "Coverage file NOT found, creating empty one"
+            echo '<?xml version="1.0"?><coverage></coverage>' > reports/coverage.xml
+          fi
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
